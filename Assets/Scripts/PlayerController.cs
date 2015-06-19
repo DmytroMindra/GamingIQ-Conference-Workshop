@@ -8,6 +8,7 @@ public class PlayerController: MonoBehaviour
 
 	public float maxVerticalPosition;
 	public float minVerticalPosition;
+	public float groundPosition;
 	public float maxAngle;
 	public float verticalSpeed;
 
@@ -70,7 +71,36 @@ public class PlayerController: MonoBehaviour
 			return -deltaY;
 		}
 
+		if (playerState == PlayerState.Falling) 
+		{
+			if (this.transform.position.y<=groundPosition)
+				return 0;
+
+			float deltaY = verticalSpeed*Time.deltaTime;
+			var newAngle = Quaternion.Euler(0, 0, -maxAngle);
+			NormalPlaneView.rotation =  Quaternion.Lerp(NormalPlaneView.transform.rotation, newAngle, 0.2f);
+			
+			return -deltaY;
+		}
+
 		return 0f;
+	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+
+
+		if (playerState == PlayerState.Falling || playerState == PlayerState.Crashed)
+			return;
+
+		Debug.Log (other.tag);
+
+		if (other.tag == "Obstacle") 
+		{
+			
+			Debug.Log ("Trigger");
+			playerState = PlayerState.Falling;
+		}
+
 	}
 }
 
