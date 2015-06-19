@@ -14,6 +14,8 @@ public class PlayerController: MonoBehaviour
 
 	public Transform NormalPlaneView;
 
+	public GameController gameController;
+
 
 	public void SetAcceleratorState(bool acceleratorPressed)
 	{
@@ -96,9 +98,12 @@ public class PlayerController: MonoBehaviour
 
 		if (other.tag == "Obstacle") 
 		{
-			
-			Debug.Log ("Trigger");
 			playerState = PlayerState.Falling;
+		}
+
+		if (other.tag == "Coin") 
+		{
+			gameController.Score += 1;
 		}
 
 	}
