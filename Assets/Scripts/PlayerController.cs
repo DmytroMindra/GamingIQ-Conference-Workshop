@@ -13,8 +13,11 @@ public class PlayerController: MonoBehaviour
 	public float verticalSpeed;
 
 	public Transform NormalPlaneView;
+	public ParticleSystem FallingSmoke;
+	public ParticleSystem CrashedSmoke;
 
 	public GameController gameController;
+	public GameLayers gameLayers;
 
 
 	public void SetAcceleratorState(bool acceleratorPressed)
@@ -76,7 +79,10 @@ public class PlayerController: MonoBehaviour
 		if (playerState == PlayerState.Falling) 
 		{
 			if (this.transform.position.y<=groundPosition)
+			{
+				TransitionToCrashed();
 				return 0;
+			}
 
 			float deltaY = verticalSpeed*Time.deltaTime;
 			var newAngle = Quaternion.Euler(0, 0, -maxAngle);
@@ -98,7 +104,7 @@ public class PlayerController: MonoBehaviour
 
 		if (other.tag == "Obstacle") 
 		{
-			playerState = PlayerState.Falling;
+			TransitionToFalling();
 		}
 
 		if (other.tag == "Coin") 
@@ -107,5 +113,20 @@ public class PlayerController: MonoBehaviour
 		}
 
 	}
+
+	void TransitionToFalling()
+	{
+		playerState = PlayerState.Falling;
+		FallingSmoke.Play ();
+	}
+
+	void TransitionToCrashed()
+	{
+		playerState = PlayerState.Crashed;
+		FallingSmoke.Stop ();
+		CrashedSmoke.Play ();
+		gameLayers.SetSpeedFactor (0);
+	}
+
 }
 

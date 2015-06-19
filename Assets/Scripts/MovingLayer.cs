@@ -6,6 +6,7 @@ public class MovingLayer : MonoBehaviour {
 
 	public float layerSpeed;
 	public float layerDelay;
+	public float speedFactor;
 
 	public bool pause;
 
@@ -69,7 +70,7 @@ public class MovingLayer : MonoBehaviour {
 			SpawnFragment ();	
 		}
 
-		float dx = -Time.deltaTime * layerSpeed;
+		float dx = -Time.deltaTime * layerSpeed * speedFactor;
 
 		Transform fragmentToRemove = null;
 

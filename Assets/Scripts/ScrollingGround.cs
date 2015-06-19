@@ -3,8 +3,11 @@ using System.Collections;
 
 public class ScrollingGround : MonoBehaviour {
 
-	public float scrollSpeed = 0.02f;
+	public float scrollSpeed;
+	public float speedFactor;
+
 	Renderer renderer;
+
 
 	void Start()
 	{
@@ -13,7 +16,8 @@ public class ScrollingGround : MonoBehaviour {
 
 	void Update()
 	{
-		float offset = Time.time * scrollSpeed;
+		float offset = renderer.material.mainTextureOffset.x;
+		offset += Time.deltaTime * scrollSpeed * speedFactor;
 		renderer.material.mainTextureOffset = new Vector2(offset % 1, 0);
 	}
 
