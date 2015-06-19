@@ -77,11 +77,15 @@ public class MovingLayer : MonoBehaviour {
 		{
 			fragment.Translate(dx,0,0);
 			if (fragment.position.x<resetAtPosition)
+			{
 				fragmentToRemove = fragment;
+			}
 		}
 
 		if (fragmentToRemove) 
-			RemoveFragment(fragmentToRemove);
+		{
+			RemoveFragment (fragmentToRemove);
+		}
 
 	}
 
