@@ -104,7 +104,7 @@ namespace Complete
 
 			// if player enters coin trigger, then it changes state to crashed
 			if (other.tag == "Coin") {
-				gameController.Coins += 1;
+				gameController.AddCoins(1);
 			}
 
 		}
